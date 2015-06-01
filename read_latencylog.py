@@ -1,3 +1,5 @@
+import datetime
+
 def dctnr(sta, agc, chn, loc, lat0, lat1, lat2, lat3, perc):
 	d = {}
 	d['satation'] = sta
@@ -15,8 +17,8 @@ def Date(date):
 	dat = months[date]
 	return dat
 	
-
-def read(LatencyFileName, STA, CHA):
+#================================================================================================================
+def read(LatencyFileName, STA):
 	counter = 0
 	Latency = open(LatencyFileName, 'r')
 	for line in Latency:
@@ -26,8 +28,26 @@ def read(LatencyFileName, STA, CHA):
 		elif counter == 4:
 			end = line.strip().split()[2]
 			End = Date(end)+'-'+line.strip().split()[3]+'-'+line.strip().split()[4]+'-'+line.strip().split()[5]
-		elif counter > 5 and (STA in line) and (CHA in line):
+		elif counter > 5 and (STA in line):
 			dictSTA = dctnr(line.split()[0],line.split()[1],line.split()[2],line.split()[3],line.split()[4],line.split()[5],line.split()[6],line.split()[7],line.split()[8])
 		counter+=1
 	Latency.close()
 	return dictSTA, Start, End
+
+#==============================================================================================================
+def StationData(sta, files):
+	Dates, lat0, lat1, lat2, lat3, porc = [], [], [], [], [], []
+
+	for file_ in files:
+		dic, start, end = read(file_, sta)
+		print dic, start, end
+		Dates.append(start.split('-')[3]+'-'+start.split('-')[0]+'-'+start.split('-')[1])
+		lat0.append(dic['Latency0'])
+		lat1.append(dic['Latency1'])
+		lat2.append(dic['Latency2'])
+		lat3.append(dic['Latency3'])
+		porc.append(dic['PercentageOut'])
+
+	for i in range(len(Dates)):
+		Dates[i] = datetime.datetime.strptime(Dates[i], '%Y-%m-%d')
+	return Dates, lat0, lat1, lat2, lat3, porc
