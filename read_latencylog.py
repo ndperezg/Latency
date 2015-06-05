@@ -1,10 +1,10 @@
 import datetime
 
-def dctnr(sta, agc, chn, loc, lat0, lat1, lat2, lat3, perc):
+def dctnr(sta, chn, agc, loc, lat0, lat1, lat2, lat3, perc):
 	d = {}
 	d['satation'] = sta
-	d['agency'] = agc
 	d['channel'] = chn
+	d['agency'] = agc
 	d['location_code'] = loc
 	d['Latency0'] = float(lat0)
 	d['Latency1'] = float(lat1)

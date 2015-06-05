@@ -25,7 +25,7 @@ def plotLatency(Dates, lat0, lat1, lat2, lat3, porc, STA):
 	ax.set_xticks(Dates)
 	#ax.set_xticklabels(Dates,rotation = 50)
 	ax.format_xdata = DateFormatter('%Y-%m-%d')
-	ax.set_aspect(0.004)
+	ax.set_aspect(0.01)
 	ax.legend(loc=4,prop={'size':9})
 	ax.set_title(STA)
 	ax.grid(True)
